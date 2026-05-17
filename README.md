@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🛡️ DisasterReady — AI Disaster Preparedness System
 
 A full-stack disaster preparedness platform with quizzes, video learning, emergency guides and analytics dashboard.
@@ -230,3 +231,17 @@ config.setAllowedOrigins(Arrays.asList(
 → Check MySQL is running: `sudo systemctl start mysql`
 → Verify credentials in `application.properties`
 → Database auto-created if `createDatabaseIfNotExist=true` is in the URL
+=======
+# Disaster Response System
+
+A full-stack web application designed to spread disaster awareness and emergency preparedness through interactive quizzes and scenario-based learning.react
+spring-boot
+mysql
+jwt-authentication
+full-stack
+disaster-management
+quiz-app
+rest-api
+java
+mern
+>>>>>>> 592c98bcf287c3e49497b2ec2063017fb1ab3dec
