@@ -88,7 +88,7 @@ export default function Dashboard() {
     if (!user?.id) return
     setLoading(true)
     attemptAPI.getByUser(user.id)
-      .then(r => setAttempts(r.data))
+      .then(r => setAttempts(Array.isArray(r.data) ? r.data : []))
       .catch(() => setAttempts([]))
       .finally(() => setLoading(false))
   }, [user])
