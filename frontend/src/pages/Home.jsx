@@ -32,7 +32,7 @@ export default function Home() {
   const [scenarios, setScenarios] = useState([])
 
   useEffect(() => {
-    scenarioAPI.getAll().then(r => setScenarios(r.data.slice(0, 3))).catch(() => {})
+    scenarioAPI.getAll().then(r => setScenarios(Array.isArray(r.data) ? r.data.slice(0, 3) : [])).catch(() => setScenarios([]))
   }, [])
 
   return (
