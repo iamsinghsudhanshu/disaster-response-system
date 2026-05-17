@@ -1,247 +1,254 @@
-<<<<<<< HEAD
 # 🛡️ DisasterReady — AI Disaster Preparedness System
 
-A full-stack disaster preparedness platform with quizzes, video learning, emergency guides and analytics dashboard.
+A full-stack disaster preparedness and awareness platform built using React, Spring Boot, JWT Authentication, and MySQL.
 
-**Stack:** React 18 + Vite + Framer Motion + Recharts (Frontend) | Spring Boot 3.2.5 + JWT + BCrypt (Backend) | MySQL (Database)
+The platform helps users learn disaster safety through:
+- Interactive quizzes
+- Emergency preparedness guides
+- Video learning modules
+- Analytics dashboards
+- Admin management system
 
 ---
 
-## 📁 Project Structure
+# 🚀 Tech Stack
 
-```
+## Frontend
+- React 18
+- Vite
+- Axios
+- Framer Motion
+- Recharts
+- React Router DOM
+
+## Backend
+- Spring Boot 3
+- Spring Security
+- JWT Authentication
+- BCrypt Password Encryption
+- Maven
+
+## Database
+- MySQL (Railway)
+
+## Deployment
+- Frontend → Vercel
+- Backend → Render
+- Database → Railway
+
+---
+
+# 📁 Project Structure
+
+```bash
 DisasterResponseSystem/
-├── backend/                          Spring Boot REST API
-│   ├── src/main/java/com/disaster/
-│   │   ├── BackendApplication.java
-│   │   ├── config/                   JWT + Security + CORS
-│   │   ├── controller/               Auth, Scenario, Question, Attempt, Admin
-│   │   ├── dto/                      Request/Response DTOs
-│   │   ├── model/                    User, Scenario, Question, QuizAttempt
-│   │   ├── repository/               JPA repositories
-│   │   └── service/                  Business logic
-│   └── src/main/resources/
-│       ├── application.properties    DB config, JWT secret
-│       └── data.sql                  120 questions (20 per scenario)
 │
-└── frontend/                         React + Vite SPA
-    ├── public/_redirects             Netlify routing fix
-    ├── vercel.json                   Vercel routing fix
-    ├── vite.config.js                Dev proxy + build config
-    └── src/
-        ├── App.jsx                   Routes + auth guards
-        ├── context/AuthContext.jsx   Auth state + dashboardVersion
-        ├── utils/api.js              Axios + all API calls
-        ├── components/               Navbar, Footer
-        └── pages/
-            ├── Home.jsx              Landing page
-            ├── Login.jsx             Login with demo credentials
-            ├── Signup.jsx            Registration + password strength
-            ├── Scenarios.jsx         6 disaster scenario cards
-            ├── Quiz.jsx              20-question quiz with timer
-            ├── Dashboard.jsx         Analytics, charts, badges
-            ├── VideoLearning.jsx     18 YouTube videos with tracking
-            ├── EmergencyGuide.jsx    Before/During/After checklists
-            ├── AdminDash.jsx         Question CRUD + stats
-            └── NotFound.jsx          404 page
-```
+├── backend/
+│   ├── src/main/java/com/disaster/
+│   │   ├── config/
+│   │   │   ├── JwtUtil.java
+│   │   │   ├── SecurityConfig.java
+│   │   │   └── DataInitializer.java
+│   │   │
+│   │   ├── controller/
+│   │   ├── dto/
+│   │   ├── model/
+│   │   ├── repository/
+│   │   └── service/
+│   │
+│   ├── src/main/resources/
+│   │   ├── application.properties
+│   │   └── data.sql
+│   │
+│   ├── Dockerfile
+│   ├── .dockerignore
+│   └── pom.xml
+│
+└── frontend/
+    ├── src/
+    │   ├── pages/
+    │   ├── components/
+    │   ├── context/
+    │   └── utils/api.js
+    │
+    ├── vercel.json
+    ├── vite.config.js
+    └── package.json
 
----
+✨ Features
+👨‍🎓 User Features
+User Signup/Login
+JWT Authentication
+Disaster Awareness Quizzes
+20 Random Questions per Quiz
+Quiz Timer
+Dashboard Analytics
+Progress Tracking
+Emergency Safety Guides
+Disaster Video Learning
+👨‍💼 Admin Features
+Admin Login
+Add/Edit/Delete Questions
+Manage Scenarios
+View User Statistics
+Dashboard Analytics
 
-## 🚀 How to Run Locally
+🌊 Disaster Scenarios
+Flood
+Earthquake
+Fire
+Cyclone
+Tsunami
+Landslide
 
-### Step 1 — MySQL Setup
-```sql
--- Either let Spring Boot auto-create:
--- (spring.datasource.url includes createDatabaseIfNotExist=true)
+🔐 Authentication
+JWT Token Authentication
+BCrypt Password Encryption
+Role-Based Access Control
+Protected Routes
 
--- Or create manually:
-CREATE DATABASE disaster_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-```
+🛠️ Local Setup
+1️⃣ Clone Repository
+git clone https://github.com/iamsinghsudhanshu/disaster-response-system.git
 
-Edit credentials in `backend/src/main/resources/application.properties`:
-```properties
+2️⃣ Backend Setup
+cd backend
+
+Configure MySQL
+
+Update:
+
+backend/src/main/resources/application.properties
+
+Example:
+spring.datasource.url=jdbc:mysql://localhost:3306/disaster_db
 spring.datasource.username=root
-spring.datasource.password=root   ← change to your MySQL password
-```
+spring.datasource.password=yourpassword
 
-### Step 2 — Start Backend
-```bash
-cd DisasterResponseSystem/backend
+Run Backend
 mvn clean spring-boot:run
-```
-✅ Runs on http://localhost:8080  
-✅ Auto-creates tables on first run  
-✅ Seeds 120 questions + admin user from data.sql  
 
-### Step 3 — Start Frontend
-```bash
-cd DisasterResponseSystem/frontend
+Backend runs on:
+
+http://localhost:8080
+
+3️⃣ Frontend Setup
+cd frontend
 npm install
 npm run dev
-```
-✅ Runs on http://localhost:5173  
-✅ API calls proxied to :8080 automatically  
 
----
+Frontend runs on:
 
-## 🔑 Default Login Credentials
+http://localhost:5173
 
-| Role  | Email                 | Password   |
-|-------|-----------------------|------------|
-| Admin | admin@disaster.com    | admin123   |
-| User  | Register via /signup  | any 6+ chars |
+🌐 Production Deployment
+🚀 Backend Deployment (Render)
+Root Directory
+backend
+Environment Variables
+SPRING_DATASOURCE_URL=jdbc:mysql://autorack.proxy.rlwy.net:41398/railway
+SPRING_DATASOURCE_USERNAME=root
+SPRING_DATASOURCE_PASSWORD=YOUR_PASSWORD
 
----
+JWT_SECRET=mySuperSecureJWTSecretKeyForDisasterResponseSystem2026
 
-## 🌐 Deployment Guide
+Dockerfile
 
-### Frontend — Deploy to Netlify (Free)
+Production-ready multi-stage Docker build included.
 
-1. Build the frontend:
-```bash
-cd frontend
-npm run build
-```
+.dockerignore
+target
+node_modules
+.git
+.idea
+.vscode
+*.log
 
-2. Go to https://netlify.com → "Add new site" → "Deploy manually"
+🚀 Frontend Deployment (Vercel)
+Root Directory
+frontend
+Build Settings
+Build Command: npm run build
+Output Directory: dist
+Install Command: npm install
 
-3. Drag the `frontend/dist/` folder into Netlify
+Environment Variables
+VITE_API_BASE_URL=https://disaster-response-backend-9r3w.onrender.com
+🔧 Production Fixes Applied
+✅ Fixed Vercel Production API Issue
 
-4. Set environment variable in Netlify dashboard:
-```
-VITE_API_URL = https://your-backend-url.com
-```
+Changed Axios baseURL to:
 
-5. Update `frontend/src/utils/api.js` baseURL:
-```js
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
-})
-```
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
+  ? `${import.meta.env.VITE_API_BASE_URL}/api`
+  : '/api'
+✅ Fixed JWT Secret Length Error
 
-The `public/_redirects` file already handles React Router SPA routing on Netlify.
+Updated JWT secret to secure 256-bit compatible key.
 
-### Frontend — Deploy to Vercel (Free)
+✅ Fixed Docker Deployment Errors
+Removed dependency on mvnw
+Added multi-stage Docker build
+Fixed jar path issues
+Added .dockerignore
+✅ Fixed .map is not a function
 
-1. Push code to GitHub
+Added safe array handling in:
 
-2. Go to https://vercel.com → "New Project" → Import your repo
+Quiz.jsx
+Dashboard.jsx
+Scenarios.jsx
 
-3. Set framework to "Vite"
+Example:
 
-4. Add environment variable: `VITE_API_URL = https://your-backend-url.com`
+const qs = Array.isArray(qRes.data) ? qRes.data : []
+✅ Fixed Admin Login
 
-The `vercel.json` already handles SPA routing.
+Created:
 
-### Backend — Deploy to Railway (Free tier available)
+DataInitializer.java
 
-1. Go to https://railway.app → "New Project" → "Deploy from GitHub"
+Automatically creates admin user:
 
-2. Select your repo → choose the `backend` folder
+Email: admin@gmail.com
+Password: admin123
+📡 API Endpoints
+Method	Endpoint	Description
+POST	/api/auth/signup	User registration
+POST	/api/auth/login	User login
+GET	/api/scenarios	Get scenarios
+GET	/api/scenarios/{id}/questions	Get quiz questions
+POST	/api/attempts	Save quiz result
+GET	/api/admin/stats	Admin statistics
 
-3. Railway auto-detects Spring Boot and builds with Maven
+📊 Dashboard Features
+Quiz Analytics
+Progress Charts
+Attempt History
+Performance Tracking
+User Statistics
+🎥 Learning Features
+Disaster Awareness Videos
+Emergency Guides
+Safety Instructions
+Preparedness Training
 
-4. Add environment variables in Railway dashboard:
-```
-SPRING_DATASOURCE_URL      = jdbc:mysql://your-db-host:3306/disaster_db
-SPRING_DATASOURCE_USERNAME = your_db_user
-SPRING_DATASOURCE_PASSWORD = your_db_password
-JWT_SECRET                 = YourLongSecretKeyHere
-```
+🌐 Live Demo
+Frontend
 
-5. Railway provides a free MySQL plugin — add it to your project
+https://disaster-response-system-two.vercel.app
 
-### Backend — Deploy to Render (Free tier)
+Backend
 
-1. Go to https://render.com → "New Web Service"
+https://disaster-response-backend-9r3w.onrender.com
 
-2. Connect GitHub repo, set root directory to `backend`
+👨‍💻 Author
 
-3. Build command: `mvn clean package -DskipTests`
+Sudhanshu Singh
 
-4. Start command: `java -jar target/backend-0.0.1-SNAPSHOT.jar`
+GitHub:
+https://github.com/iamsinghsudhanshu
 
-5. Add environment variables same as Railway above
+📜 License
 
-### Update CORS for Production
-
-After deployment, add your frontend URL to `SecurityConfig.java`:
-```java
-config.setAllowedOrigins(Arrays.asList(
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "https://your-app.netlify.app",    ← add your deployed frontend URL
-    "https://your-app.vercel.app"      ← add your deployed frontend URL
-));
-```
-
----
-
-## 📡 API Endpoints
-
-| Method | Endpoint                          | Auth     | Description              |
-|--------|-----------------------------------|----------|--------------------------|
-| POST   | /api/auth/signup                  | Public   | Register new user        |
-| POST   | /api/auth/login                   | Public   | Login, returns JWT       |
-| GET    | /api/scenarios                    | Public   | All disaster scenarios   |
-| GET    | /api/scenarios/{id}/questions     | Public   | Questions for a scenario |
-| POST   | /api/questions                    | ADMIN    | Add a question           |
-| PUT    | /api/questions/{id}               | ADMIN    | Update a question        |
-| DELETE | /api/questions/{id}               | ADMIN    | Delete a question        |
-| POST   | /api/attempts                     | USER     | Save quiz result         |
-| GET    | /api/attempts/user/{userId}       | USER     | Get user quiz history    |
-| GET    | /api/admin/stats                  | ADMIN    | Dashboard KPIs           |
-| GET    | /api/admin/users                  | ADMIN    | List all users           |
-
----
-
-## 🏆 Features
-
-- **120 Quiz Questions** — 20 per disaster scenario (Flood, Earthquake, Fire, Cyclone, Landslide, Tsunami)
-- **30-second Timer** per question with visual countdown
-- **Live Dashboard** — updates instantly after quiz, video watch, or guide read
-- **Progress Charts** — bar chart, pie chart, line trend (Recharts)
-- **10 Achievement Badges** — quiz count, perfect score, videos watched, guides read
-- **Video Learning** — 18 curated YouTube videos with watch tracking
-- **Emergency Guides** — Before/During/After/Kit checklists for all 6 disasters
-- **JWT Authentication** — BCrypt passwords, role-based access (USER/ADMIN)
-- **Admin Dashboard** — CRUD questions, view stats, manage scenarios
-- **Fully Responsive** — mobile, tablet, desktop
-- **Glassmorphism UI** — gradients, animations, Framer Motion throughout
-
----
-
-## 🔧 Troubleshooting
-
-**Backend: "Only 1 question per scenario"**
-→ Run `mvn clean spring-boot:run` (the `clean` phase deletes old compiled classes)
-→ Ensure `application.properties` has `spring.sql.init.mode=always`
-
-**Backend: SecurityConfig startup error**
-→ Always compile fresh with `mvn clean spring-boot:run`
-→ Never run from VS Code's cached `.class` files after replacing source
-
-**Frontend: API calls failing**
-→ Ensure backend is running on port 8080
-→ `vite.config.js` proxy handles `/api` → `localhost:8080` in dev
-→ In production, set `VITE_API_URL` environment variable
-
-**MySQL connection refused**
-→ Check MySQL is running: `sudo systemctl start mysql`
-→ Verify credentials in `application.properties`
-→ Database auto-created if `createDatabaseIfNotExist=true` is in the URL
-=======
-# Disaster Response System
-
-A full-stack web application designed to spread disaster awareness and emergency preparedness through interactive quizzes and scenario-based learning.react
-spring-boot
-mysql
-jwt-authentication
-full-stack
-disaster-management
-quiz-app
-rest-api
-java
-mern
->>>>>>> 592c98bcf287c3e49497b2ec2063017fb1ab3dec
+This project is for educational and awareness purposes.
