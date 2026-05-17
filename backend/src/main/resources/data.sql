@@ -778,7 +778,16 @@ INSERT INTO questions (question, options, correct_answer, explanation, scenario_
 -- DEFAULT ADMIN USER
 -- password: admin123  (BCrypt hashed)
 -- ================================================================
-INSERT IGNORE INTO users (name, email, password, role) VALUES
-('Admin User', 'admin@disaster.com',
- '$2a$10$yFrYSaonMPppjK5r/DTUZ.dzvGLNkulRGKaOZNgkZcpbwgIrMo7fm',
- 'ADMIN');
+-- FIX: Use ON DUPLICATE KEY UPDATE instead of INSERT IGNORE.
+-- INSERT IGNORE silently skips if email already exists, even if the
+-- stored hash is corrupt. ON DUPLICATE KEY UPDATE always overwrites
+-- the password hash ensuring admin login always works after redeployment.
+-- NOTE: DataInitializer.java also re-hashes at startup via PasswordEncoder
+-- as a second layer of protection.
+INSERT INTO users (name, email, password, role)
+VALUES ('Admin User', 'admin@disaster.com',
+        '$2a$10$cA088ltFq4IdaYf0bfw4Hun3/XbdVR/llz1LIDvSKMU97vIkxzbXm',
+        'ADMIN')
+ON DUPLICATE KEY UPDATE
+  password = '$2a$10$cA088ltFq4IdaYf0bfw4Hun3/XbdVR/llz1LIDvSKMU97vIkxzbXm',
+  role = 'ADMIN';
