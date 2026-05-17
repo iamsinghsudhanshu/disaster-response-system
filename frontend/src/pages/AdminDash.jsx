@@ -27,11 +27,11 @@ export default function AdminDash() {
         scenarioAPI.getAll(),
       ])
       setStats(statsRes.data)
-      setQuestions(questRes.data.map(q => ({
+      setQuestions((Array.isArray(questRes.data) ? questRes.data : []).map(q => ({
         ...q,
         options: typeof q.options === 'string' ? JSON.parse(q.options) : q.options,
       })))
-      setScenarios(scenRes.data)
+      setScenarios(Array.isArray(scenRes.data) ? scenRes.data : [])
     } catch {
       toast.error('Failed to load admin data')
     } finally {
