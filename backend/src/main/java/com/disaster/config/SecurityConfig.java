@@ -19,18 +19,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 /**
- * Spring Security configuration.
- * - Stateless JWT-based auth (no sessions)
- * - CORS enabled for React dev server (port 5173 and 3000)
- * - Public: /api/auth/**, GET /api/scenarios/**
- * - ADMIN only: POST/PUT/DELETE on /api/questions/**, /api/scenarios/**, /api/admin/**
- * - Authenticated: everything else
+ * FIX: Added Vercel production URL to allowedOrigins.
+ * Without this, every API call from the deployed frontend
+ * was blocked by the browser with a CORS error.
  */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // @Lazy prevents circular dependency: SecurityConfig -> JwtAuthFilter -> UserRepository -> SecurityConfig
     @Lazy
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
@@ -42,11 +38,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http.csrf(csrf -> csrf.disable());
-
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
-
         http.sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
@@ -65,7 +58,6 @@ public class SecurityConfig {
         );
 
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 
@@ -73,18 +65,19 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        // Allow React dev servers on common ports
+        // FIX: Added production Vercel URL.
+        // Old code only had localhost — all deployed API calls were CORS-blocked.
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:5173",
                 "http://localhost:3000",
                 "http://127.0.0.1:5173",
-                "http://127.0.0.1:3000"
+                "http://127.0.0.1:3000",
+                "https://disaster-response-system-two.vercel.app"
         ));
 
         config.setAllowedMethods(Arrays.asList(
                 "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"
         ));
-
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
