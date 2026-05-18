@@ -52,7 +52,7 @@ export default function Footer() {
 
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
           <p style={{ color: 'var(--text-dim)', fontSize: '0.82rem' }}>
-            © 2024 DisasterReady. Built for safety and preparedness.
+            © 2026 DisasterReady. Built for safety and preparedness.
           </p>
           <p style={{ color: 'var(--text-dim)', fontSize: '0.82rem' }}>
             Made with ❤️ using React + Spring Boot
